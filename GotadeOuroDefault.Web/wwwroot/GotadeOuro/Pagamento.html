@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pagina de Pagamento</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background: linear-gradient(135deg, #000000, #ffcc00);
+        }
+
+        .container {
+            max-width: 500px;
+            height: 500px;
+            width: 200%;
+            background-color: #fff;
+            padding: 50px 50px;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+        }
+
+
+            .container .title {
+                font-size: 25px;
+                font-weight: 500;
+                position: relative;
+                font-family: Tahoma;
+            }
+
+                .container .title::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    height: 3px;
+                    width: 30px;
+                    border-radius: 5px;
+                    background: linear-gradient(135deg, #000000, #ffcc00);
+                }
+
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            display: grid;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            font-family: Tahoma;
+        }
+
+        input[type="text"], select {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .payment-fields {
+            display: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #000000, #ffcc00);
+            color: #111;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1> <img src="/Content/site/images/gotadeouro.png" width="110" height="130"></h1><br>
+        <div class="title">Pagamento</div><br>
+
+        <form id="payment-form" onsubmit="event.preventDefault(); processPayment();" novalidate>
+            <label for="payment-method">Forma de Pagamento:</label>
+            <select id="payment-method" name="payment-method" onchange="togglePaymentFields()">
+                <option value="credit-card">Cartao de Credito</option>
+                <option value="debit-card">Cartao de Debito</option>
+                <option value="boleto">Boleto</option>
+                <option value="pix">PIX</option>
+            </select>
+
+            <div id="credit-card-fields" class="payment-fields">
+                <label for="card-number">Numero do Cartao:</label>
+                <input type="text" id="card-number" name="card-number" required>
+
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <label for="expiry">Validade:</label>
+                        <input type="text" id="expiry" name="expiry" required>
+                    </div>
+                    <div class="grid-item">
+                        <label for="cvv">CVV:</label>
+                        <input type="text" id="cvv" name="cvv" required>
+                    </div>
+                </div>
+            </div>
+
+            <div id="debit-card-fields" class="payment-fields">
+                <label for="debit-card-number">Numero do Cartao:</label>
+                <input type="text" id="debit-card-number" name="debit-card-number" required>
+            </div>
+
+            <div id="boleto-fields" class="payment-fields">
+                <button type="button" onclick="generateBoleto()">Gerar Boleto</button>
+                <div id="boleto-number" style="display: none;"></div>
+            </div>
+
+            <div id="pix-fields" class="payment-fields">
+                <label for="pix-code">Codigo PIX:</label>
+                <input type="text" id="pix-code" name="pix-code" required>
+            </div>
+
+            <button type="submit">Pagar</button>
+        </form>
+    </div>
+    <script>
+        function togglePaymentFields() {
+            var paymentMethod = document.getElementById('payment-method').value;
+            var paymentFields = document.getElementsByClassName('payment-fields');
+
+            for (var i = 0; i < paymentFields.length; i++) {
+                paymentFields[i].style.display = 'none';
+            }
+
+            var selectedPaymentFields = document.getElementById(paymentMethod + '-fields');
+            selectedPaymentFields.style.display = 'block';
+        }
+
+        function processPayment() {
+            // Simulação do processamento do pagamento
+
+            var paymentMethod = document.getElementById('payment-method').value;
+
+            if (paymentMethod === 'credit-card') {
+                var cardNumber = document.getElementById('card-number').value;
+                var expiry = document.getElementById('expiry').value;
+                var cvv = document.getElementById('cvv').value;
+
+                if (cardNumber === '' || expiry === '' || cvv === '') {
+                    displayResult('Por favor, preencha todos os campos.');
+                    return;
+                }
+
+                // Simular chamada a uma API de pagamento de cartão de crédito (resposta fictícia)
+                setTimeout(function () {
+                    displayResult('Pagamento com cartão de crédito processado com sucesso!');
+                }, 2000);
+            } else if (paymentMethod === 'debit-card') {
+                var debitCardNumber = document.getElementById('debit-card-number').value;
+
+                if (debitCardNumber === '') {
+                    displayResult('Por favor, preencha todos os campos.');
+                    return;
+                }
+
+                // Simular chamada a uma API de pagamento de cartão de débito (resposta fictícia)
+                setTimeout(function () {
+                    displayResult('Pagamento com cartão de débito processado com sucesso!');
+                }, 2000);
+            } else if (paymentMethod === 'boleto') {
+                var boletoNumber = document.getElementById('boleto-number').innerText;
+
+                if (boletoNumber === '') {
+                    displayResult('Por favor, gere o boleto.');
+                    return;
+                }
+
+                // Simular chamada a uma API de geração de boleto (resposta fictícia)
+                setTimeout(function () {
+                    displayResult('Boleto gerado com sucesso! O número do boleto é: ' + boletoNumber);
+                }, 2000);
+            } else if (paymentMethod === 'pix') {
+                var pixCode = document.getElementById('pix-code').value;
+
+                if (pixCode === '') {
+                    displayResult('Por favor, preencha todos os campos.');
+                    return;
+                }
+
+                // Simular chamada a uma API de pagamento PIX (resposta fictícia)
+                setTimeout(function () {
+                    displayResult('Pagamento PIX processado com sucesso!');
+                }, 2000);
+            }
+        }
+
+        function generateBoleto() {
+            var boletoNumber = '123456789'; // Gerar número do boleto aqui (simulação)
+            var boletoNumberElement = document.getElementById('boleto-number');
+            boletoNumberElement.innerText = boletoNumber;
+            boletoNumberElement.style.display = 'block';
+        }
+
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

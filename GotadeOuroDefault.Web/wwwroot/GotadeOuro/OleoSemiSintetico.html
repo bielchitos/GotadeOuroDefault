@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Oleo Semisintetico</title>
+    <style>
+        h1 {
+         width: 300px;
+         margin: 80px auto 20px;
+         text-align: center;
+          }
+
+          h3 {
+           text-align: center;
+           font-family: "Tahoma";
+           color: #D3AF01;
+           font-size: 28px;
+
+          } 
+
+
+          .borda-centralizada {
+            border: 1px solid #818181;
+            width: 280px;
+            margin: 0 auto;
+            padding: 8px;
+          }
+
+          h4 {
+            float: right; 
+            margin: 50px;
+          }  
+
+
+        h5 {
+           text-align: center;
+           font-family: "Tahoma";
+           color: #000000;
+           font-size: 20px;
+
+           }
+
+          body {
+          color: #000000;
+          margin: 0;
+          font-family: "Tahoma";
+          font-size: 18px;
+          line-height: 1.5;
+          background: #ffffff;
+
+        }   
+
+
+
+        .container {
+           display: flex;
+           flex-wrap: wrap;
+
+       }
+       .product {
+           width: 300px;
+           margin: 20px;
+           padding: 20px;
+           border: 70px solid #ffffff;
+
+       }
+        .cart-item {
+            margin-bottom: 5px;
+
+        }
+        .cart-item img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .cart-item button {
+            margin-left: 5px;        
+
+        }
+
+        .addToCartBtn{
+            background: linear-gradient(135deg, #000000, #ffcc00);
+            color: #ffffff;
+            padding: 8px 15px;
+            border: 1px;
+            border-color: #000000;
+            cursor: pointer;
+            }
+
+
+        footer{
+               padding: 20px;
+               text-align: center;
+               font-family: Tahoma;
+           }
+
+           footer p{
+            margin: 0;
+           }
+
+    </style>
+     <h4><img src="/Content/site/images/carrinho.png" width="40" height="40">
+        <div id="cart"></div>
+        <p>Total: R$<span id="cartTotal">0.00</span></p>
+        <button onclick="checkout()">Finalizar Compra</button></h4>
+</head>
+<body>
+  <div class="center">
+      <h1> <img src="/Content/site/images/gotadeouro.png"width="170" height="190"></h1><br>
+      <div class="borda-centralizada">
+        <center><h3>Oleo Semisintetico</h3></center>
+      </div>
+      <div class="container">
+        <div class="product">
+            <h5><img src="/Content/site/images/oleosemiSintecopetronas.png"width="150" height="280" alt="oleosemiSintecopetronas.png">
+            <p>Oleo Semissintetico Petronas 800 SE - 10w-30 API SP</p>
+
+            <p>Preco: R$49,66</p>
+            <button onclick="addToCart('/Content/site/images/oleosemiSintecopetronas.png', 10)" class="addToCartBtn">Adicionar ao Carrinho</button></h5>
+        </div>
+
+        <div class="product">
+            <h5><img src="/Content/site/images/oleosemiSinteticohavoline.png" alt="oleosemiSinteticohavoline.png">
+            <p>Oleo Semissintetico (Texaco) SAE 10w-30 API SN</p>
+
+            <p>Preco: R$38,80</p>
+            <button onclick="addToCart('/Content/site/images/oleosemiSinteticohavoline.png', 38.80)"  class="addToCartBtn">Adicionar ao Carrinho</button></h5>
+        </div>
+
+        <div class="product">
+            <h5><img src="/Content/site/images/oleosemiSinteticolubrax.png" alt="oleosemiSinteticolubrax.png">
+            <p>Oleo Semissintetico tecno 15w40 Lubrax 3 litros</p>
+            <p></p>
+            <p>Preco: R$104,99</p>
+            <button onclick="addToCart('/Content/site/images/oleosemiSinteticolubrax.png', 104.99)"  class="addToCartBtn">Adicionar ao Carrinho</button></h5>
+        </div>
+
+        <div class="product">
+            <h5><img src="/Content/site/images/oleosemiSinteticomobil.png" alt="oleosemiSinteticomobil.png">
+            <p>Oleo de Motor 5w30 semissintetico - Mobil</p>
+            <p>Preco: R$32,99</p>
+            <button onclick="addToCart('/Content/site/images/oleosemiSinteticomobil.png', 32.99)"  class="addToCartBtn">Adicionar ao Carrinho</button></h5>
+        </div>
+
+    </div>
+
+
+</body>
+<footer>
+    <p>Copyright © 2023. Todos os Direitos Reservados<br>                                                                                        CNPJ: 03.709.814/0001-98<br>
+
+        Rua Dante Battiston, 263 – Curitiba – PR<br>                                                                                             Telefone: (11) 3526-5739</p>
+</footer>
+
+<script>
+    var cartItems = [];
+
+    function addToCart(imageUrlSmall, price) {
+        cartItems.push({
+            imageUrlSmall: imageUrlSmall,
+            price: price
+        });
+
+        updateCart();
+    }
+
+    function removeFromCart(index) {
+        cartItems.splice(index, 1);
+        updateCart();
+    }
+
+    function updateCart() {
+        var cartElement = document.getElementById('cart');
+        var cartTotalElement = document.getElementById('cartTotal');
+        cartElement.innerHTML = '';
+        var total = 0;
+
+        for (var i = 0; i < cartItems.length; i++) {
+            var item = cartItems[i];
+            cartElement.innerHTML += '<div class="cart-item"><img src="' + item.imageUrlSmall + '" alt="Imagem do Produto">' + '  R$' + item.price + '<button onclick="removeFromCart(' + i + ')">Remover</button></div>';
+            total += item.price;
+        }
+
+        cartTotalElement.textContent = total.toFixed(2);
+    }
+
+    function checkout() {
+        // Lógica para finalizar a compra aqui
+        alert('Compra finalizada com sucesso!');
+        cartItems = [];
+        updateCart();
+    }
+</script>
+</html>

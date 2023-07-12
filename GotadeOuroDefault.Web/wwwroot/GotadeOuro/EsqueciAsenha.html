@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Esqueci Minha Senha</title>
+  <style>
+    body{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: linear-gradient(135deg, #000000, #ffcc00);
+    }
+
+  .container{
+  max-width: 500px;
+  height: 250px;
+  width: 200%;
+  background-color: #fff;
+  padding: 50px 50px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+  }
+
+
+.container .title{
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+  font-family: Tahoma;
+}
+.container .title::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #000000, #ffcc00);
+}
+
+
+    h1 {
+     text-align: center;
+                    }  
+
+
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .error-message {
+      color: #ffcc00;
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      color: rgb(0, 0, 0);
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #000000, #ffcc00);
+      color: #ffffff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #000000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1> <img src="/Content/site/images/gotadeouro.png"width="110" height="130"></h1><br>
+    <div class="title">Esqueci Minha Senha</div><br>
+    <form id="forgotPasswordForm">
+      <input type="email" id="emailInput" placeholder="Digite seu email" required><br>
+      <div id="emailError" class="error-message"></div>
+      <button type="submit">Redefinir Senha</button>
+    </form>
+    <div id="successMessage" class="success-message" style="display: none;"></div>
+  </div>
+
+  <script>
+    // Função para validar o email
+    function validateEmail(email) {
+      // Expressão regular para validar o email
+      const regex = /^[a-zA-Z0-9._%+-;
+     
+    }
+
+    // Função para processar o formulário quando enviado
+    function handleSubmit(event) {
+      event.preventDefault();
+
+      var emailInput = document.getElementById('emailInput');
+      var emailError = document.getElementById('emailError');
+      var successMessage = document.getElementById('successMessage');
+
+      // Verifica se o email é válido
+      if (!validateEmail(emailInput.value)) {
+        emailError.textContent = 'Por favor, insira um email válido.';
+        return;
+      }
+
+      // Simula o envio do formulário
+      // Aqui você pode adicionar lógica para processar o formulário no lado do servidor
+      // e enviar um email de redefinição de senha
+
+      // Exibe a mensagem de sucesso
+      successMessage.textContent = 'Um email com as instruções de redefinição de senha foi enviado para o endereço fornecido.';
+      successMessage.style.display = 'block';
+
+      // Limpa o campo do email e a mensagem de erro
+      emailInput.value = '';
+      emailError.textContent = '';
+    }
+
+    var form = document.getElementById('forgotPasswordForm');
+    form.addEventListener('submit', handleSubmit);
+  </script>
+</body>
+</html>
